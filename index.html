@@ -1,0 +1,122 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Kalkulator Berat Badan Ideal</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background: linear-gradient(to right, #6dd5fa, #ffffff);
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            margin: 0;
+        }
+        .container {
+            background-color: white;
+            padding: 30px;
+            border-radius: 15px;
+            box-shadow: 0 4px 15px rgba(0,0,0,0.2);
+            width: 350px;
+            text-align: center;
+        }
+        h2 {
+            color: #0078d7;
+        }
+        label {
+            display: block;
+            margin-top: 15px;
+            font-weight: bold;
+        }
+        input, select {
+            width: 100%;
+            padding: 8px;
+            margin-top: 5px;
+            border: 1px solid #ccc;
+            border-radius: 5px;
+        }
+        button {
+            background-color: #0078d7;
+            color: white;
+            border: none;
+            padding: 10px 15px;
+            margin-top: 20px;
+            border-radius: 5px;
+            cursor: pointer;
+            width: 100%;
+        }
+        button:hover {
+            background-color: #005fa3;
+        }
+        #hasil {
+            margin-top: 20px;
+            font-weight: bold;
+            color: #333;
+        }
+    </style>
+</head>
+<body>
+
+<div class="container">
+    <h2>Kalkulator Berat Badan Ideal</h2>
+    <label for="jenisKelamin">Jenis Kelamin:</label>
+    <select id="jenisKelamin">
+        <option value="">-- Pilih --</option>
+        <option value="L">Laki-laki</option>
+        <option value="P">Perempuan</option>
+    </select>
+
+    <label for="tinggi">Tinggi Badan (cm):</label>
+    <input type="number" id="tinggi" placeholder="Contoh: 170">
+
+    <label for="berat">Berat Badan (kg):</label>
+    <input type="number" id="berat" placeholder="Contoh: 65">
+
+    <button onclick="hitungIdeal()">Hitung</button>
+
+    <div id="hasil"></div>
+</div>
+
+<script>
+function hitungIdeal() {
+    const jenisKelamin = document.getElementById("jenisKelamin").value;
+    const tinggi = parseFloat(document.getElementById("tinggi").value);
+    const berat = parseFloat(document.getElementById("berat").value);
+    const hasil = document.getElementById("hasil");
+
+    if (!jenisKelamin || !tinggi || !berat) {
+        hasil.innerHTML = "⚠️ Harap isi semua data terlebih dahulu.";
+        hasil.style.color = "red";
+        return;
+    }
+
+    let beratIdeal;
+    if (jenisKelamin === "L") {
+        beratIdeal = (tinggi - 100) - ((tinggi - 100) * 0.10);
+    } else if (jenisKelamin === "P") {
+        beratIdeal = (tinggi - 100) - ((tinggi - 100) * 0.15);
+    }
+
+    let status;
+    if (berat < beratIdeal - 2) {
+        status = "Kurus";
+    } else if (berat > beratIdeal + 2) {
+        status = "Gemuk";
+    } else {
+        status = "Ideal";
+    }
+
+    hasil.innerHTML = `
+        <p>Tinggi Badan: <b>${tinggi} cm</b></p>
+        <p>Berat Badan: <b>${berat} kg</b></p>
+        <p>Berat Ideal: <b>${beratIdeal.toFixed(1)} kg</b></p>
+        <p>Status: <b>${status}</b></p>
+    `;
+    hasil.style.color = "#333";
+}
+</script>
+
+</body>
+</html>
